@@ -13,6 +13,10 @@ typedef struct
 //the C methods for heap insertion, removal, and access.
 void insertHeap(int *arr, int value, int *size)
 {
+    //do nothing if the maximum size has been reached
+    if (*size == MAX_SIZE)
+        return;
+
     arr[*size] = value;
     int childPos = *size;
     int parentPos = ((*size - 1) / 2);
@@ -35,6 +39,10 @@ void insertHeap(int *arr, int value, int *size)
 
 int heapRemove(int *arr, int *size)
 {
+    //return -1 if the size is 0
+    if (*size == 0)
+        return -1;
+
     //the value to return (minimum value)
     int result = arr[0];
 
@@ -101,12 +109,22 @@ Priority_Queue_ExtractMin(Priority_Queue *self)
     return Py_BuildValue("i", result);
 }
 
+// Access the minimum element from the priority queue
 static PyObject *
 Priority_Queue_GetMin(Priority_Queue *self)
 {
-    int result = self->arr[0];
+    //if empty just return a value of -1 as the minimum element
+    //this is okay for our use case as a distance of -1 is not possible
+    if (self->size == 0)
+        return Py_BuildValue("i", -1);
 
-    return Py_BuildValue("i", result);
+    return Py_BuildValue("i", self->arr[0]);
+}
+
+static PyObject *
+Priority_Queue_Size(Priority_Queue *self)
+{
+    return Py_BuildValue("i", self->size);
 }
 
 //constructor for the object
@@ -140,6 +158,9 @@ static PyMethodDef Priority_Queue_methods[] = {
     {"get_min", (PyCFunction)Priority_Queue_GetMin, METH_NOARGS,
      "Return the minimum element in the heap"},
 
+    {"size", (PyCFunction)Priority_Queue_Size, METH_NOARGS,
+     "Return the current size of the heap"},
+
     {NULL}, //Sentinel
 };
 
@@ -166,6 +187,7 @@ static PyModuleDef PQmodule = {
     .m_name = "PQ",
     .m_doc = "Min_Heap implementation in C for python",
     .m_size = -1,
+
 };
 
 //initialization function
