@@ -2,14 +2,22 @@
 Final Project for Data Structures and Algorithms
 
 ### Dependencies and Building
-This project has python dependencies which can be installed using pip in a virutal enviornment:
+This project has python module dependencies which can be installed from PyPI, as well as extension modules which need to be installed in a virutal enviornment.
+
+
+First create and activate the virtual enviornment:
 
 ```$ python3 -m venv venv```
 
 ```$ source ./venv/bin/activate```
 
+Install dependencies via PyPI:
+
 ```$ pip install -r requirements.txt```
 
-This project also has python extension modules which must be compiled before running main.py
+Finally build and install the extension modules in the virtual enviornment:
 
-```$ python3 setup.py build```
+```$ python setup.py build```
+
+Now you can run the program!
+```$ python main.py```
