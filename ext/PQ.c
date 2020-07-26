@@ -121,10 +121,18 @@ Priority_Queue_GetMin(Priority_Queue *self)
     return Py_BuildValue("i", self->arr[0]);
 }
 
+//accessor for the size of the priority queue
 static PyObject *
 Priority_Queue_Size(Priority_Queue *self)
 {
     return Py_BuildValue("i", self->size);
+}
+
+//method to return true if emtpy and false otherwise
+static PyObject *
+Priority_Queue_Empty(Priority_Queue *self)
+{
+    return self->size == 0 ? Py_True : Py_False;
 }
 
 //constructor for the object
@@ -161,6 +169,9 @@ static PyMethodDef Priority_Queue_methods[] = {
     {"size", (PyCFunction)Priority_Queue_Size, METH_NOARGS,
      "Return the current size of the heap"},
 
+    {"empty", (PyCFunction)Priority_Queue_Empty, METH_NOARGS,
+     "Returns boolean whether or not heap is empty"},
+
     {NULL}, //Sentinel
 };
 
@@ -169,7 +180,7 @@ static PyMethodDef Priority_Queue_methods[] = {
 //are requested
 static PyTypeObject Priority_Queue_Type = {
 
-    PyVarObject_HEAD_INIT(NULL, 0).tp_name = "PQ.Priority_Queue",
+    PyVarObject_HEAD_INIT(NULL, 0).tp_name = "ext.Priority_Queue",
     .tp_doc = "Min Heap / Priority Queue",
     .tp_basicsize = sizeof(Priority_Queue),
     .tp_itemsize = 0,
@@ -181,24 +192,24 @@ static PyTypeObject Priority_Queue_Type = {
 
 };
 
-static PyModuleDef PQmodule = {
+static PyModuleDef extmodule = {
 
     PyModuleDef_HEAD_INIT,
-    .m_name = "PQ",
-    .m_doc = "Min_Heap implementation in C for python",
+    .m_name = "ext",
+    .m_doc = "extension module for data structures",
     .m_size = -1,
 
 };
 
 //initialization function
 PyMODINIT_FUNC
-PyInit_PQ(void)
+PyInit_ext(void)
 {
     PyObject *m;
     if (PyType_Ready(&Priority_Queue_Type) < 0)
         return NULL;
 
-    m = PyModule_Create(&PQmodule);
+    m = PyModule_Create(&extmodule);
     if (m == NULL)
         return NULL;
 
