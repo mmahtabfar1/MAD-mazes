@@ -1,14 +1,7 @@
 #define PY_SSIZE_T_CLEAN
 #define MAX_SIZE 1000000
+#include "PQ.h"
 #include <Python.h>
-
-typedef struct
-{
-    PyObject_HEAD;
-    int arr[MAX_SIZE];
-    int size;
-
-} Priority_Queue;
 
 //the C methods for heap insertion, removal, and access.
 void insertHeap(int *arr, int value, int *size)
@@ -83,7 +76,7 @@ int heapRemove(int *arr, int *size)
 }
 
 //insert an element into the heap
-static PyObject *
+PyObject *
 Priority_Queue_insert(Priority_Queue *self, PyObject *args)
 {
     int val;
@@ -98,7 +91,7 @@ Priority_Queue_insert(Priority_Queue *self, PyObject *args)
     return Py_None;
 }
 
-static PyObject *
+PyObject *
 Priority_Queue_ExtractMin(Priority_Queue *self)
 {
     int result;
@@ -110,7 +103,7 @@ Priority_Queue_ExtractMin(Priority_Queue *self)
 }
 
 // Access the minimum element from the priority queue
-static PyObject *
+PyObject *
 Priority_Queue_GetMin(Priority_Queue *self)
 {
     //if empty just return a value of -1 as the minimum element
@@ -122,24 +115,22 @@ Priority_Queue_GetMin(Priority_Queue *self)
 }
 
 //accessor for the size of the priority queue
-static PyObject *
+PyObject *
 Priority_Queue_Size(Priority_Queue *self)
 {
     return Py_BuildValue("i", self->size);
 }
 
 //method to return true if emtpy and false otherwise
-static PyObject *
+PyObject *
 Priority_Queue_Empty(Priority_Queue *self)
 {
     return self->size == 0 ? Py_True : Py_False;
 }
 
 //constructor for the object
-static int
-Priority_Queue_init(Priority_Queue *self, PyObject *args, PyObject *kwds)
+int Priority_Queue_init(Priority_Queue *self, PyObject *args, PyObject *kwds)
 {
-
     //set the initial size to 0
     self->size = 0;
 
@@ -148,78 +139,7 @@ Priority_Queue_init(Priority_Queue *self, PyObject *args, PyObject *kwds)
 }
 
 //destructor for the object
-static void
-Priority_Queue_dealloc(Priority_Queue *self)
+void Priority_Queue_dealloc(Priority_Queue *self)
 {
     Py_TYPE(self)->tp_free((PyObject *)self);
-}
-
-//methods for the object
-static PyMethodDef Priority_Queue_methods[] = {
-
-    {"insert", (PyCFunction)Priority_Queue_insert, METH_VARARGS,
-     "Insert a new integer into the heap"},
-
-    {"extract_min", (PyCFunction)Priority_Queue_ExtractMin, METH_NOARGS,
-     "Remove and return the minimum element from the heap"},
-
-    {"get_min", (PyCFunction)Priority_Queue_GetMin, METH_NOARGS,
-     "Return the minimum element in the heap"},
-
-    {"size", (PyCFunction)Priority_Queue_Size, METH_NOARGS,
-     "Return the current size of the heap"},
-
-    {"empty", (PyCFunction)Priority_Queue_Empty, METH_NOARGS,
-     "Returns boolean whether or not heap is empty"},
-
-    {NULL}, //Sentinel
-};
-
-//This struct describes how the Priority Queue type beahves, it defines a set of flags
-//and associated function pointers that the interpreter inspects when specific operations
-//are requested
-static PyTypeObject Priority_Queue_Type = {
-
-    PyVarObject_HEAD_INIT(NULL, 0).tp_name = "ext.Priority_Queue",
-    .tp_doc = "Min Heap / Priority Queue",
-    .tp_basicsize = sizeof(Priority_Queue),
-    .tp_itemsize = 0,
-    .tp_flags = Py_TPFLAGS_DEFAULT,
-    .tp_new = PyType_GenericNew,
-    .tp_init = (initproc)Priority_Queue_init,
-    .tp_methods = Priority_Queue_methods,
-    .tp_dealloc = (destructor)Priority_Queue_dealloc,
-
-};
-
-static PyModuleDef extmodule = {
-
-    PyModuleDef_HEAD_INIT,
-    .m_name = "ext",
-    .m_doc = "extension module for data structures",
-    .m_size = -1,
-
-};
-
-//initialization function
-PyMODINIT_FUNC
-PyInit_ext(void)
-{
-    PyObject *m;
-    if (PyType_Ready(&Priority_Queue_Type) < 0)
-        return NULL;
-
-    m = PyModule_Create(&extmodule);
-    if (m == NULL)
-        return NULL;
-
-    Py_INCREF(&Priority_Queue_Type);
-    if (PyModule_AddObject(m, "Priority_Queue", (PyObject *)&Priority_Queue_Type) < 0)
-    {
-        Py_DECREF(&Priority_Queue_Type);
-        Py_DECREF(m);
-        return NULL;
-    }
-
-    return m;
 }
