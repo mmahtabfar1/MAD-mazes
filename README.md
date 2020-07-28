@@ -17,7 +17,8 @@ Install dependencies via PyPI:
 
 Finally build and install the extension modules in the virtual enviornment:
 
-```$ python setup.py build```
+```$ python setup.py install```
 
 Now you can run the program!
+
 ```$ python main.py```
