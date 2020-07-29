@@ -4,6 +4,10 @@ from ext import Priority_Queue
 from gui import main as gui_main
 from DepthFirst import DFS
 
+"""
+Authors: Mahan Mahtabfar
+"""
+
 # program execution starts here
 if __name__ == "__main__":
 
