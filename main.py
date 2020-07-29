@@ -20,3 +20,4 @@ if __name__ == "__main__":
     dfs.solve()
 
     print(dfs.answer)
+    dfs.write_out("mazes/tiny_solved.png")

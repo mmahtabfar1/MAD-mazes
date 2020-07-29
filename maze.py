@@ -5,6 +5,7 @@ class Maze:
 
         # adjacency list in the form of a python dictionary
         # same as std::map in c++
+        self.im = im
         self.graph = {}
 
         # another dictionary to map node ID's to their
@@ -34,7 +35,7 @@ class Maze:
                     self.raw_data[i][j] = counter
 
                     # add location info and add node to adjlist
-                    self.node_locations[counter] = (i, j)
+                    self.node_locations[counter] = (j, i)
                     self.graph[counter] = []
 
                     # increment counter and number of nodes by 1

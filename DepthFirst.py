@@ -11,6 +11,7 @@ class DFS:
     def __init__(self, maze):
 
         self.maze = maze
+        self.positions = maze.node_locations
         self.graph = maze.graph
 
         self.answer = list()
@@ -66,3 +67,18 @@ class DFS:
 
             else:
                 self.answer.pop()
+
+    # this method will write out the solved maze to a new png file
+    # with the DFS solution in red pixels
+    def write_out(self, filepath):
+
+        # first convert the image to rgb
+        self.maze.im = self.maze.im.convert("RGB")
+        px = self.maze.im.load()
+
+        for node in self.answer:
+
+            location = self.positions[node]
+            px[location] = (255, 0, 0)
+
+        self.maze.im.save(filepath)
