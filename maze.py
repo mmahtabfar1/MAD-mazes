@@ -1,15 +1,5 @@
 class Maze:
 
-    class Path:
-
-        def __init__(self):
-            # a list of integers representing the nodes in order
-            self.path = list()
-
-        def add(self, node):
-            # add a node to the path
-            self.path.append(node)
-
     # creates the maze given an a pillow image object
     def __init__(self, im):
 
