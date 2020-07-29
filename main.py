@@ -5,7 +5,7 @@ from gui import main as gui_main
 from DepthFirst import DFS
 
 """
-Authors: Mahan Mahtabfar
+Authors: Mahan Mahtabfar, Derek Musial
 """
 
 # program execution starts here
