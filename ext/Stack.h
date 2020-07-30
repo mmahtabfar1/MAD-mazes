@@ -5,9 +5,11 @@
 //stack type for C
 typedef struct
 {
-    PyObject_HEAD;
+
+    PyObject_HEAD
     int arr[MAX_SIZE];
     int size;
+
 } Stack;
 
 //stack insert method
