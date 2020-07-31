@@ -3,6 +3,27 @@
 #include "PQ.h"
 #include <Python.h>
 
+/*
+
+
+Below is C code to create a min heap / Priority Queue for python.
+Below is a description of how to use this type in python.
+
+from ext import Priority_Queue
+
+heap = Priority_Queue()
+
+heap.insert(distance, node) -> None
+heap.extract_min() -> returns a tuple with (distance, id) and remove from heap
+heap.get_min() -> return a tuple with (distance, id) does not remove
+heap.empty() -> returns True if empty False otherwise
+heap.size() -> returns 0 if empty false otherwise
+ 
+extract_min will return the minimum distance NOT the minimum ID.
+
+
+*/
+
 //the C methods for heap insertion, removal, and access.
 void insertHeap(Node *arr, Node value, int *size)
 {

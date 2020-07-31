@@ -3,6 +3,25 @@
 #include "Stack.h"
 #include <Python.h>
 
+/*
+
+
+Below is C code to create an integer stack in Python
+Below is a description of how to use this type in python
+
+from ext import Stack
+
+stack = Stack()
+
+stack.push(val) -> will push val onto the stack
+stack.pop() -> returns None!! will remove top of stack
+stack.peek() -> returns int equal to the top of the stack
+stack.empty() -> returns True if empty False otherwise
+stack.size() -> returns the size of the stack
+
+
+*/
+
 //Stack insert method
 PyObject *
 Stack_push(Stack *self, PyObject *args)
