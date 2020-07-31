@@ -4,7 +4,7 @@
 #include <Python.h>
 
 //the C methods for heap insertion, removal, and access.
-void insertHeap(int *arr, int value, int *size)
+void insertHeap(Node *arr, Node value, int *size)
 {
     //do nothing if the maximum size has been reached
     if (*size == MAX_SIZE)
@@ -15,10 +15,10 @@ void insertHeap(int *arr, int value, int *size)
     int parentPos = ((*size - 1) / 2);
 
     //"heapify" up if necessary
-    while (parentPos >= 0 && arr[parentPos] > arr[childPos])
+    while (parentPos >= 0 && arr[parentPos].distance > arr[childPos].distance)
     {
 
-        int temp = arr[parentPos];
+        Node temp = arr[parentPos];
         arr[parentPos] = arr[childPos];
         arr[childPos] = temp;
 
@@ -30,27 +30,34 @@ void insertHeap(int *arr, int value, int *size)
     (*size)++;
 }
 
-int heapRemove(int *arr, int *size)
+Node heapRemove(Node *arr, int *size)
 {
-    //return -1 if the size is 0
+    //return  a tuple of (-1, -1) if the size is 0
     if (*size == 0)
-        return -1;
+    {
+        Node temp;
+        temp.distance = -1;
+        temp.id = -1;
+
+        return temp;
+    }
+        
 
     //the value to return (minimum value)
-    int result = arr[0];
+    Node result = arr[0];
 
     int pos = 0;
     arr[pos] = arr[--(*size)];
 
     int child = 2 * pos + 1;
 
-    while (child < *size && (arr[pos] > arr[child] || arr[pos] > arr[child + 1]))
+    while (child < *size && (arr[pos].distance > arr[child].distance || arr[pos].distance > arr[child + 1].distance))
     {
 
         //swap with first child
-        if (arr[child] < arr[child + 1])
+        if (arr[child].distance < arr[child + 1].distance)
         {
-            int temp = arr[pos];
+            Node temp = arr[pos];
             arr[pos] = arr[child];
             arr[child] = temp;
 
@@ -62,7 +69,7 @@ int heapRemove(int *arr, int *size)
         //swap with second child
         else
         {
-            int temp = arr[pos];
+            Node temp = arr[pos];
             arr[pos] = arr[child + 1];
             arr[child + 1] = temp;
 
@@ -79,13 +86,19 @@ int heapRemove(int *arr, int *size)
 PyObject *
 Priority_Queue_insert(Priority_Queue *self, PyObject *args)
 {
-    int val;
+    int distance;
+    int id;
 
-    if (!PyArg_ParseTuple(args, "i", &val))
+    if (!PyArg_ParseTuple(args, "ii", &distance, &id))
         return NULL;
 
+    //the Node to insert
+    Node temp;
+    temp.distance = distance;
+    temp.id = id;
+
     //insert the element to the heap and heapify if necessary
-    insertHeap(self->arr, val, &(self->size));
+    insertHeap(self->arr, temp, &(self->size));
 
     //does not return a type same as None in python
     return Py_None;
@@ -94,12 +107,12 @@ Priority_Queue_insert(Priority_Queue *self, PyObject *args)
 PyObject *
 Priority_Queue_ExtractMin(Priority_Queue *self)
 {
-    int result;
+    Node result;
 
     //remove the element from the heap and heapify if necessary
     result = heapRemove(self->arr, &(self->size));
 
-    return Py_BuildValue("i", result);
+    return Py_BuildValue("(ii)", result.distance, result.id);
 }
 
 // Access the minimum element from the priority queue
@@ -111,7 +124,7 @@ Priority_Queue_GetMin(Priority_Queue *self)
     if (self->size == 0)
         return Py_BuildValue("i", -1);
 
-    return Py_BuildValue("i", self->arr[0]);
+    return Py_BuildValue("(ii)", self->arr[0].distance, self->arr[0].id);
 }
 
 //accessor for the size of the priority queue

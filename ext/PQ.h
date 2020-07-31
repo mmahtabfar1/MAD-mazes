@@ -2,19 +2,26 @@
 #define MAX_SIZE 1000000
 #include <Python.h>
 
+// Node type to pair id to distance
+typedef struct
+{
+    int distance;
+    int id;
+} Node;
+
 // Priority_Queue for C
 typedef struct
 {
 
     PyObject_HEAD
-    int arr[MAX_SIZE];
+    Node arr[MAX_SIZE];
     int size;
 
 } Priority_Queue;
 
 //helper C functions
-void insertHeap(int *arr, int value, int *size);
-int heapRemove(int *arr, int *size);
+void insertHeap(Node *arr, Node value, int *size);
+Node heapRemove(Node *arr, int *size);
 
 //insert into heap
 PyObject *
