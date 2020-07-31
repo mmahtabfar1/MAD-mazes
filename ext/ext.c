@@ -63,6 +63,9 @@ static PyMethodDef Priority_Queue_methods[] = {
     {"empty", (PyCFunction)Priority_Queue_Empty, METH_NOARGS,
      "Returns boolean whether or not heap is empty"},
 
+    {"get_distance", (PyCFunction)Priority_Queue_Get_Distance, METH_VARARGS,
+     "Returns the distance associated with the given node ID"},
+
     {"decrease_key", (PyCFunction)Priority_Queue_Decrease_Key, METH_VARARGS,
      "Decrease the distance of a particular node"},
 

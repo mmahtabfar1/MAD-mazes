@@ -14,7 +14,10 @@ from ext import Priority_Queue
 heap = Priority_Queue()
 
 heap.insert(id, distance) -> None
+
 heap.extract_min() -> returns a tuple with (id, distance) and remove from heap
+^ extract_min will return the minimum distance NOT the minimum ID.
+
 heap.get_min() -> return a tuple with (id, distance) does not remove
 heap.empty() -> returns True if empty False otherwise
 heap.size() -> returns 0 if empty false otherwise
@@ -22,7 +25,7 @@ heap.size() -> returns 0 if empty false otherwise
 heap.decrease_key(id, new_distance) -> None
 ^ this will decrease the distance of a node with a particular ID to the new distance
  
-extract_min will return the minimum distance NOT the minimum ID.
+ heap.get_distance(id) -> returns the distance associated with the node with the given ID.
 
 
 */
@@ -164,6 +167,17 @@ PyObject *Priority_Queue_insert(Priority_Queue *self, PyObject *args)
 
     //does not return a type same as None in python
     return Py_None;
+}
+
+PyObject *
+Priority_Queue_Get_Distance(Priority_Queue *self, PyObject *args)
+{
+    int id;
+
+    if (!PyArg_ParseTuple(args, "i", &id))
+        return NULL;
+
+    return Py_BuildValue("i", self->arr[self->node_locations[id]]);
 }
 
 PyObject *

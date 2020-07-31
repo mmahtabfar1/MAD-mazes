@@ -46,6 +46,9 @@ Priority_Queue_Size(Priority_Queue *self);
 PyObject *
 Priority_Queue_Empty(Priority_Queue *self);
 
+PyObject *
+Priority_Queue_Get_Distance(Priority_Queue *self, PyObject *args);
+
 //decreases the distance for a particular node which is not the minimum node if necessary
 //using the array to look up its position
 PyObject *
