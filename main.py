@@ -25,3 +25,5 @@ if __name__ == "__main__":
 
     print(dfs.answer)
     dfs.write_out("mazes/tiny_solved.png")
+
+    gui_main()
