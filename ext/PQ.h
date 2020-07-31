@@ -5,8 +5,10 @@
 // Node type to pair id to distance
 typedef struct
 {
+
     int distance;
     int id;
+
 } Node;
 
 // Priority_Queue for C
@@ -14,14 +16,15 @@ typedef struct
 {
 
     PyObject_HEAD
-    Node arr[MAX_SIZE];
+        Node arr[MAX_SIZE];
+    int node_locations[MAX_SIZE];
     int size;
 
 } Priority_Queue;
 
 //helper C functions
-void insertHeap(Node *arr, Node value, int *size);
-Node heapRemove(Node *arr, int *size);
+void insertHeap(Node *arr, int *node_locations, Node value, int *size);
+Node heapRemove(Node *arr, int *node_locations, int *size);
 
 //insert into heap
 PyObject *
@@ -42,6 +45,11 @@ Priority_Queue_Size(Priority_Queue *self);
 //returns True if size is 0, false otherwise
 PyObject *
 Priority_Queue_Empty(Priority_Queue *self);
+
+//decreases the distance for a particular node which is not the minimum node if necessary
+//using the array to look up its position
+PyObject *
+Priority_Queue_Decrease_Key(Priority_Queue *self, PyObject *args);
 
 //constructor for PQ
 int Priority_Queue_init(Priority_Queue *self, PyObject *args, PyObject *kwds);

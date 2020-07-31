@@ -13,11 +13,14 @@ from ext import Priority_Queue
 
 heap = Priority_Queue()
 
-heap.insert(distance, node) -> None
-heap.extract_min() -> returns a tuple with (distance, id) and remove from heap
-heap.get_min() -> return a tuple with (distance, id) does not remove
+heap.insert(id, distance) -> None
+heap.extract_min() -> returns a tuple with (id, distance) and remove from heap
+heap.get_min() -> return a tuple with (id, distance) does not remove
 heap.empty() -> returns True if empty False otherwise
 heap.size() -> returns 0 if empty false otherwise
+
+heap.decrease_key(id, new_distance) -> None
+^ this will decrease the distance of a node with a particular ID to the new distance
  
 extract_min will return the minimum distance NOT the minimum ID.
 
@@ -25,19 +28,23 @@ extract_min will return the minimum distance NOT the minimum ID.
 */
 
 //the C methods for heap insertion, removal, and access.
-void insertHeap(Node *arr, Node value, int *size)
+void insertHeap(Node *arr, int *node_locations, Node value, int *size)
 {
     //do nothing if the maximum size has been reached
     if (*size == MAX_SIZE)
         return;
 
     arr[*size] = value;
+    node_locations[value.id] = *size;
     int childPos = *size;
     int parentPos = ((*size - 1) / 2);
 
     //"heapify" up if necessary
     while (parentPos >= 0 && arr[parentPos].distance > arr[childPos].distance)
     {
+        //update node_locations to reflect this change
+        node_locations[arr[parentPos].id] = childPos;
+        node_locations[arr[childPos].id] = parentPos;
 
         Node temp = arr[parentPos];
         arr[parentPos] = arr[childPos];
@@ -51,7 +58,7 @@ void insertHeap(Node *arr, Node value, int *size)
     (*size)++;
 }
 
-Node heapRemove(Node *arr, int *size)
+Node heapRemove(Node *arr, int *node_locations, int *size)
 {
     //return  a tuple of (-1, -1) if the size is 0
     if (*size == 0)
@@ -62,7 +69,6 @@ Node heapRemove(Node *arr, int *size)
 
         return temp;
     }
-        
 
     //the value to return (minimum value)
     Node result = arr[0];
@@ -82,6 +88,10 @@ Node heapRemove(Node *arr, int *size)
             arr[pos] = arr[child];
             arr[child] = temp;
 
+            //update node_locations to reflect this change
+            node_locations[arr[pos].id] = child;
+            node_locations[arr[child].id] = pos;
+
             //recalculate child and pos
             pos = child;
             child = 2 * pos + 1;
@@ -94,6 +104,10 @@ Node heapRemove(Node *arr, int *size)
             arr[pos] = arr[child + 1];
             arr[child + 1] = temp;
 
+            //update node_locations to reflect this change
+            node_locations[arr[pos].id] = child;
+            node_locations[arr[child].id] = pos;
+
             //recalculate child and pos
             pos = child;
             child = 2 * pos + 1;
@@ -103,14 +117,41 @@ Node heapRemove(Node *arr, int *size)
     return result;
 }
 
-//insert an element into the heap
-PyObject *
-Priority_Queue_insert(Priority_Queue *self, PyObject *args)
+void Decrease_Key(Node *arr, int *node_locations, int new_distance, int node_id)
 {
-    int distance;
-    int id;
 
-    if (!PyArg_ParseTuple(args, "ii", &distance, &id))
+    //change the distance of the node with that particular ID in O(1)
+    arr[node_locations[node_id]].distance = new_distance;
+
+    //heapify up if necessary in O(logn) time
+    int childPos = node_locations[node_id];
+    int parentPos = (childPos - 1) / 2;
+
+    while (parentPos >= 0 && arr[parentPos].distance > arr[childPos].distance)
+    {
+
+        //update node_locations to reflect this change
+        node_locations[arr[parentPos].id] = childPos;
+        node_locations[arr[childPos].id] = parentPos;
+
+        Node temp = arr[parentPos];
+        arr[parentPos] = arr[childPos];
+        arr[childPos] = temp;
+
+        //recalculate the positions for parents
+        childPos = parentPos;
+        parentPos = ((childPos - 1) / 2);
+    }
+}
+
+//insert an element into the heap
+PyObject *Priority_Queue_insert(Priority_Queue *self, PyObject *args)
+{
+
+    int id;
+    int distance;
+
+    if (!PyArg_ParseTuple(args, "ii", &id, &distance))
         return NULL;
 
     //the Node to insert
@@ -119,7 +160,22 @@ Priority_Queue_insert(Priority_Queue *self, PyObject *args)
     temp.id = id;
 
     //insert the element to the heap and heapify if necessary
-    insertHeap(self->arr, temp, &(self->size));
+    insertHeap(self->arr, self->node_locations, temp, &(self->size));
+
+    //does not return a type same as None in python
+    return Py_None;
+}
+
+PyObject *
+Priority_Queue_Decrease_Key(Priority_Queue *self, PyObject *args)
+{
+    int id;
+    int new_distance;
+
+    if (!PyArg_ParseTuple(args, "ii", &id, &new_distance))
+        return NULL;
+
+    Decrease_Key(self->arr, self->node_locations, new_distance, id);
 
     //does not return a type same as None in python
     return Py_None;
@@ -131,9 +187,9 @@ Priority_Queue_ExtractMin(Priority_Queue *self)
     Node result;
 
     //remove the element from the heap and heapify if necessary
-    result = heapRemove(self->arr, &(self->size));
+    result = heapRemove(self->arr, self->node_locations, &(self->size));
 
-    return Py_BuildValue("(ii)", result.distance, result.id);
+    return Py_BuildValue("(ii)", result.id, result.distance);
 }
 
 // Access the minimum element from the priority queue
@@ -145,7 +201,7 @@ Priority_Queue_GetMin(Priority_Queue *self)
     if (self->size == 0)
         return Py_BuildValue("i", -1);
 
-    return Py_BuildValue("(ii)", self->arr[0].distance, self->arr[0].id);
+    return Py_BuildValue("(ii)", self->arr[0].id, self->arr[0].distance);
 }
 
 //accessor for the size of the priority queue
