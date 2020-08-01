@@ -66,7 +66,8 @@ class DFS:
                         self.stack.push(i)
 
             else:
-                self.answer.pop()
+                if curr in self.answer:
+                    self.answer.pop()
 
     # this method will write out the solved maze to a new png file
     # with the DFS solution in red pixels

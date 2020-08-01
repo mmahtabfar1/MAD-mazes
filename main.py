@@ -12,7 +12,7 @@ Authors: Mahan Mahtabfar, Derek Musial, Amer Khalifa
 # program execution starts here
 if __name__ == "__main__":
 
-    im = Image.open("mazes/tiny.png")
+    im = Image.open("mazes/test2.png")
     maze = Maze(im)
 
     print("\nMaze printing below:")
@@ -21,14 +21,14 @@ if __name__ == "__main__":
     print("\nAdjacency List printing below:")
     maze.print_graph()
 
-    #dfs = DFS(maze)
-    #dfs.solve()
+    dfs = DFS(maze)
+    dfs.solve()
 
-    #print(dfs.answer)
-    #dfs.write_out("mazes/tiny_solved.png")
+    print(dfs.answer)
+    dfs.write_out("mazes/tiny_solved.png")
 
     #gui_main()
 
-    dj = DJ(maze)
-    dj.solve()
-    print(dj.answer)
+    #dj = DJ(maze)
+    #dj.solve()
+    #print(dj.answer)
