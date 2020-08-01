@@ -21,6 +21,8 @@ class DFS:
         self.current_node = 1
         self.end_node = maze.num_nodes
 
+        self.stack.push(1)
+
     # this method will advance the current node and stack using DFS
     # this needs to be called over and over again with time in-between for
     # use with the GUI should return true if the maze has been solved, false otherwise
@@ -34,8 +36,6 @@ class DFS:
 
     # this method will solve the maze all at once for use with CLI
     def solve(self):
-
-        self.stack.push(1)
 
         while not self.stack.empty():
 
@@ -82,3 +82,8 @@ class DFS:
             px[location] = (255, 0, 0)
 
         self.maze.im.save(filepath)
+
+    # this method is used to create a gif for the github page
+    def make_gif(self, filepath):
+
+        pass
