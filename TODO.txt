@@ -1,0 +1,10 @@
+Make Priority Queue in python - Mahan
+Look into DFS missing single node in path - Derek
+Test and get dijkstras workign with the new Priority Queue - Mahan
+
+if cant get Priority Queue working....
+make Amans version with an array less efficient but fuck it.
+
+make argparse version and get set up to read from a directory - Mahan and Derek
+
+By end of Saturday command line version should be working
