@@ -5,3 +5,4 @@ build
 .vs
 *.egg-info
 dist
+.DS_store

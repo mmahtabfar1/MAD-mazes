@@ -74,7 +74,10 @@ Stack_size(Stack *self)
 PyObject *
 Stack_empty(Stack *self)
 {
-    return self->size == 0 ? Py_True : Py_False;
+    if (self->size == 0)
+        Py_RETURN_TRUE;
+    
+    Py_RETURN_FALSE;
 }
 
 //constructor for the Stack

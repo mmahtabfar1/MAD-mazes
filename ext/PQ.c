@@ -229,7 +229,10 @@ Priority_Queue_Size(Priority_Queue *self)
 PyObject *
 Priority_Queue_Empty(Priority_Queue *self)
 {
-    return self->size == 0 ? Py_True : Py_False;
+    if (self->size == 0)
+        Py_RETURN_TRUE;
+    
+    Py_RETURN_FALSE;
 }
 
 //constructor for the object
