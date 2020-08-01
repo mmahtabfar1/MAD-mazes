@@ -3,6 +3,7 @@ from maze import Maze
 from ext import Priority_Queue
 from gui import main as gui_main
 from DepthFirst import DFS
+from dijkstras import DJ
 
 """
 Authors: Mahan Mahtabfar, Derek Musial, Amer Khalifa
@@ -20,10 +21,14 @@ if __name__ == "__main__":
     print("\nAdjacency List printing below:")
     maze.print_graph()
 
-    dfs = DFS(maze)
-    dfs.solve()
+    #dfs = DFS(maze)
+    #dfs.solve()
 
-    print(dfs.answer)
-    dfs.write_out("mazes/tiny_solved.png")
+    #print(dfs.answer)
+    #dfs.write_out("mazes/tiny_solved.png")
 
-    gui_main()
+    #gui_main()
+
+    dj = DJ(maze)
+    dj.solve()
+    print(dj.answer)

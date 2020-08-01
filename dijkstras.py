@@ -24,10 +24,6 @@ class DJ:
         self.distances = Priority_Queue()
         self.predecessors = [-1] * maze.num_nodes
 
-        # this is a map (python dictionary) to map vertex ID to 
-        # its location within the binary heap array.
-        self.heap_locations = {}
-
         # add the start node to the visited set
         self.visited.add(self.start_node)
 
@@ -39,7 +35,7 @@ class DJ:
         # add all of the nodes to the distances heap.
         # insert the start node with a distance 0 and all others with self.INFINITY
         # which is the maximum integer value in C
-        self.distances.insert(0, 1)
+        self.distances.insert(1, 0)
 
         for i in range(2, self.maze.num_nodes + 1):
             self.distances.insert(self.INFINITY, i)
@@ -60,18 +56,28 @@ class DJ:
         # remove the start vertex from the unvisited
         # and add it to the visited set
 
-        self.unvisited.remove(1)
-        self.visited.add(1)
-
         # do this while unvisited set is not empty
         while len(self.unvisited) != 0:
 
+            cur = distances.extract_min()
 
+            self.unvisited.remove(cur[0])
+            self.visited.add(cur[0])
 
-            pass
+            neighbors = self.graph[cur[0]]
 
-        
+            for v in neighbors:
+                if v in self.unvisited:
+                    if cur[1]+1 < self.distances.get_distance[v]:
+                        self.distances.decrease_key(v, cur[1]+1)
+                        self.predecessors[v] = cur[0]
 
+                      
+        current = self.end_node
+        while (self.predecessors[current] != self.start_node):
+            current = self.predecessors[current]
+            self.answer.appendleft(current)
 
-        pass
+        self.answer.appendleft(self.start_node)
+
         
