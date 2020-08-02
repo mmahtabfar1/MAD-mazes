@@ -59,6 +59,14 @@ Priority_Queue_Decrease_Key(Priority_Queue *self, PyObject *args);
 PyObject *
 Priority_Queue_Print(Priority_Queue *self);
 
+//print just the Node array
+PyObject *
+Priority_Queue_PrintArray(Priority_Queue *self);
+
+//print just the node locations
+PyObject *
+Priority_Queue_PrintNodes(Priority_Queue *self);
+
 //constructor for PQ
 int Priority_Queue_init(Priority_Queue *self, PyObject *args, PyObject *kwds);
 

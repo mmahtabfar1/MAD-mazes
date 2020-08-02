@@ -70,7 +70,13 @@ static PyMethodDef Priority_Queue_methods[] = {
      "Decrease the distance of a particular node"},
     
     {"print", (PyCFunction)Priority_Queue_Print, METH_NOARGS,
-        "Prints the queue to the screen for debugging purposes"},
+     "Prints the queue to the screen for debugging purposes"},
+
+    {"print_array", (PyCFunction)Priority_Queue_PrintArray, METH_NOARGS,
+     "Prints out just the Node array to the screen"},
+
+    {"print_nodes", (PyCFunction)Priority_Queue_PrintNodes, METH_NOARGS,
+     "Prints out just the Node locations to the screen"},
 
     {NULL}, //Sentinel
 

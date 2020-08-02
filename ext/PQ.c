@@ -24,6 +24,10 @@ heap.size() -> returns 0 if empty false otherwise
 
 heap.decrease_key(id, new_distance) -> None
 ^ this will decrease the distance of a node with a particular ID to the new distance
+
+heap.print() -> will print the heap array with node locations for debuggin purposes
+heap.print_array() -> prints just array
+heap.print_nodes() -> prints just the node locations
  
  heap.get_distance(id) -> returns the distance associated with the node with the given ID.
 
@@ -266,6 +270,44 @@ Priority_Queue_Print(Priority_Queue *self)
     
     
     return Py_None;
+
+}
+
+//print just the Priority_Queue
+PyObject *
+Priority_Queue_PrintArray(Priority_Queue *self)
+{
+
+    printf("Priority_Queue:\n");
+    //print start bracket
+    printf("[");
+    
+    for(int i = 0; i < self->size - 1; i++)
+    {
+        printf("(%d, %d) ", self->arr[i].id, self->arr[i].distance);
+    }
+    
+    //print end bracket and last element
+    printf("(%d, %d)]\n", self->arr[self->size - 1].id, self->arr[self->size - 1].distance);
+
+    return Py_None;
+
+}
+
+//print just the Node locations
+PyObject *
+Priority_Queue_PrintNodes(Priority_Queue *self)
+{
+
+    printf("\nNode_locations:\n");
+    
+    for(int i = 0; i < self->size; i++)
+    {
+        printf("Node %d is locatd at index %d\n", self->arr[i].id, self->node_locations[self->arr[i].id]);
+    }
+    
+    return Py_None;
+
 }
 
 //constructor for the object
