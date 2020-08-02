@@ -15,11 +15,11 @@ if __name__ == "__main__":
     im = Image.open("mazes/test2.png")
     maze = Maze(im)
 
-    print("\nMaze printing below:")
-    maze.print()
+    #print("\nMaze printing below:")
+    #maze.print()
 
-    print("\nAdjacency List printing below:")
-    maze.print_graph()
+    #print("\nAdjacency List printing below:")
+    #maze.print_graph()
 
     dfs = DFS(maze)
     dfs.solve()
@@ -29,6 +29,10 @@ if __name__ == "__main__":
 
     #gui_main()
 
+    im2 = Image.open("mazes/test2.png")
+    maze = Maze(im2)
+
     dj = DJ(maze)
     dj.solve()
     print(dj.answer)
+    dj.write_out("mazes/test2_solved_dj.png")

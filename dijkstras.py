@@ -50,7 +50,7 @@ class DJ:
         # do this while unvisited set is not empty
         while not self.distances.empty():
         
-            self.distances.print()
+            #self.distances.print()
         
             if self.end_node in self.visited:
                 break
@@ -60,7 +60,7 @@ class DJ:
             self.visited.add(curr[0])
 
             neighbors = self.graph[curr[0]]
-            print(curr[0])
+            #print(curr[0])
 
             for v in neighbors:
             
@@ -70,21 +70,30 @@ class DJ:
                         self.distances.decrease_key(v, curr[1] + 1)
                         self.predecessors[v] = curr[0]
 
-                      
-                      
-        
-        print("done with dijkstras")
+        #print("done with dijkstras")
         
         current = self.end_node
         self.answer.appendleft(self.end_node)
+
         while (self.predecessors[current] != self.start_node):
             if(self.predecessors[current] == -1):
                 break
             current = self.predecessors[current]
             self.answer.appendleft(current)
 
-
-
         self.answer.appendleft(self.start_node)
+
+    def write_out(self, filepath):
+
+        # first convert the image to rgb
+        self.maze.im = self.maze.im.convert("RGB")
+        px = self.maze.im.load()
+
+        for node in self.answer:
+
+            location = self.positions[node]
+            px[location] = (0, 0, 255)
+
+        self.maze.im.save(filepath)
 
         
