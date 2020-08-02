@@ -81,10 +81,13 @@ Node heapRemove(Node *arr, int *node_locations, int *size)
 
     int child = 2 * pos + 1;
 
+    //heapify down if necessary
     while (child < *size && (arr[pos].distance > arr[child].distance || arr[pos].distance > arr[child + 1].distance))
     {
 
         //swap with first child
+        // if left child is less than right child
+        // then swap with left child.
         if (arr[child].distance < arr[child + 1].distance)
         {
             
@@ -106,15 +109,15 @@ Node heapRemove(Node *arr, int *node_locations, int *size)
         {
             
             //update node_locations to reflect this change
-            node_locations[arr[pos].id] = child;
-            node_locations[arr[child].id] = pos;
+            node_locations[arr[pos].id] = child + 1;
+            node_locations[arr[child + 1].id] = pos;
                         
             Node temp = arr[pos];
             arr[pos] = arr[child + 1];
             arr[child + 1] = temp;
 
             //recalculate child and pos
-            pos = child;
+            pos = child + 1;
             child = 2 * pos + 1;
         }
     }
@@ -130,7 +133,7 @@ void Decrease_Key(Node *arr, int *node_locations, int new_distance, int node_id)
 
     //heapify up if necessary in O(logn) time
     int childPos = node_locations[node_id];
-    int parentPos = (childPos - 1) / 2;
+    int parentPos = ((childPos - 1) / 2);
 
     while (parentPos >= 0 && arr[parentPos].distance > arr[childPos].distance)
     {

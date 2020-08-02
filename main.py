@@ -1,7 +1,7 @@
 from PIL import Image
 from maze import Maze
 from ext import Priority_Queue
-from gui import main as gui_main
+#from gui import main as gui_main
 from DepthFirst import DFS
 from dijkstras import DJ
 
@@ -25,10 +25,10 @@ if __name__ == "__main__":
     dfs.solve()
 
     print(dfs.answer)
-    dfs.write_out("mazes/tiny_solved.png")
+    dfs.write_out("mazes/test2_solved_dfs.png")
 
     #gui_main()
 
-    #dj = DJ(maze)
-    #dj.solve()
-    #print(dj.answer)
+    dj = DJ(maze)
+    dj.solve()
+    print(dj.answer)

@@ -47,36 +47,39 @@ class DJ:
     """
     def solve(self):
 
-        # remove the start vertex from the unvisited
-        # and add it to the visited set
-
         # do this while unvisited set is not empty
-        while len(self.unvisited) != 0:
-
+        while not self.distances.empty():
+        
+            self.distances.print()
+        
             if self.end_node in self.visited:
                 break
 
-            cur = self.distances.extract_min()
+            curr = self.distances.extract_min()
+            
+            self.visited.add(curr[0])
 
-
-            print("removing " + str(cur[0]))
-            print("distance " + str(cur[1]))
-
-            self.unvisited.remove(cur[0])
-            self.visited.add(cur[0])
-
-            neighbors = self.graph[cur[0]]
+            neighbors = self.graph[curr[0]]
+            print(curr[0])
 
             for v in neighbors:
-                if v in self.unvisited:
-                    if cur[1]+1 < self.distances.get_distance(v):
-                        self.distances.decrease_key(v, cur[1]+1)
-                        self.predecessors[v] = cur[0]
+            
+                if not v in self.visited:
+                
+                    if curr[1] + 1 < self.distances.get_distance(v):
+                        self.distances.decrease_key(v, curr[1] + 1)
+                        self.predecessors[v] = curr[0]
 
                       
+                      
+        
+        print("done with dijkstras")
+        
         current = self.end_node
         self.answer.appendleft(self.end_node)
         while (self.predecessors[current] != self.start_node):
+            if(self.predecessors[current] == -1):
+                break
             current = self.predecessors[current]
             self.answer.appendleft(current)
 
