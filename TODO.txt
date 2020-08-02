@@ -7,4 +7,7 @@ make Amans version with an array less efficient but fuck it.
 
 make argparse version and get set up to read from a directory - Mahan and Derek
 
+Look into Tkinter GUI for python and set up basic visuals - Amer
+Created Hello World Py file to test KTinker stuff - Amer
+
 By end of Saturday command line version should be working
