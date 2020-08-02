@@ -54,6 +54,11 @@ Priority_Queue_Get_Distance(Priority_Queue *self, PyObject *args);
 PyObject *
 Priority_Queue_Decrease_Key(Priority_Queue *self, PyObject *args);
 
+//debugging method to print the priority queue to the screen
+//along with its node_locations array
+PyObject *
+Priority_Queue_Print(Priority_Queue *self);
+
 //constructor for PQ
 int Priority_Queue_init(Priority_Queue *self, PyObject *args, PyObject *kwds);
 

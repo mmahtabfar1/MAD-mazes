@@ -87,13 +87,14 @@ Node heapRemove(Node *arr, int *node_locations, int *size)
         //swap with first child
         if (arr[child].distance < arr[child + 1].distance)
         {
-            Node temp = arr[pos];
-            arr[pos] = arr[child];
-            arr[child] = temp;
-
+            
             //update node_locations to reflect this change
             node_locations[arr[pos].id] = child;
             node_locations[arr[child].id] = pos;
+            
+            Node temp = arr[pos];
+            arr[pos] = arr[child];
+            arr[child] = temp;
 
             //recalculate child and pos
             pos = child;
@@ -103,13 +104,14 @@ Node heapRemove(Node *arr, int *node_locations, int *size)
         //swap with second child
         else
         {
-            Node temp = arr[pos];
-            arr[pos] = arr[child + 1];
-            arr[child + 1] = temp;
-
+            
             //update node_locations to reflect this change
             node_locations[arr[pos].id] = child;
             node_locations[arr[child].id] = pos;
+                        
+            Node temp = arr[pos];
+            arr[pos] = arr[child + 1];
+            arr[child + 1] = temp;
 
             //recalculate child and pos
             pos = child;
@@ -233,6 +235,34 @@ Priority_Queue_Empty(Priority_Queue *self)
         Py_RETURN_TRUE;
     
     Py_RETURN_FALSE;
+}
+
+//debugging method to print the priority queue along with
+// it's node_locations array to the screen
+PyObject *
+Priority_Queue_Print(Priority_Queue *self)
+{
+    printf("Priority_Queue:\n");
+    //print start bracket
+    printf("[");
+    
+    for(int i = 0; i < self->size - 1; i++)
+    {
+        printf("(%d, %d) ", self->arr[i].id, self->arr[i].distance);
+    }
+    
+    //print end bracket and last element
+    printf("(%d, %d)]\n", self->arr[self->size - 1].id, self->arr[self->size - 1].distance);
+    
+    printf("\nNode_locations:\n");
+    
+    for(int i = 0; i < self->size; i++)
+    {
+        printf("Node %d is locatd at index %d\n", self->arr[i].id, self->node_locations[self->arr[i].id]);
+    }
+    
+    
+    return Py_None;
 }
 
 //constructor for the object
