@@ -125,7 +125,7 @@ class DFS:
                 location = self.positions[node]
                 px[location] = (255, 0 ,0)
 
-            images.append(copy.copy())
+            images.append(copy)
 
         # do this one more time for the solved frame
         copy = self.maze.im.copy()
