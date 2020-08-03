@@ -2,6 +2,7 @@
 Below is the implementation of using
 Depth First search to solve the mazes
 """
+from PIL import Image
 from maze import Maze
 from ext import Stack
 
@@ -139,8 +140,13 @@ class DFS:
             px[location] = (255, 0 ,0)
 
         images.append(copy)
+        
+        # resize the images to make them easier to view
+        # since gifs are difficult to resize after creation
+        for i in range(len(images)):
+            images[i] = images[i].resize((500,500), Image.NEAREST)
 
         images[0].save(filepath, format="GIF",
                 append_images=images[1:],
                 save_all=True,
-                duration=300, Loop=0)
+                duration=300, Loop=0, quality=100)
