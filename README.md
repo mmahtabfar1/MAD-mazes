@@ -1,6 +1,8 @@
 # MAD-mazes
 Final Project for Data Structures and Algorithms
 
+![Alt Text](./examples/tiny.gif)
+
 ### Dependencies and Building
 This project has python module dependencies which can be installed from PyPI, as well as extension modules which need to be installed in a virutal enviornment.
 
