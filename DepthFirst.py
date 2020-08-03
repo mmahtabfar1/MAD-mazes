@@ -149,4 +149,4 @@ class DFS:
         images[0].save(filepath, format="GIF",
                 append_images=images[1:],
                 save_all=True,
-                duration=300, Loop=0, quality=100)
+                duration=300, loop=0, quality=100)
