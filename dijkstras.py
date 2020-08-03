@@ -1,5 +1,4 @@
 """ Dijkstra's Algorithm"""
-
 from ext import Priority_Queue
 from collections import deque
 
@@ -17,14 +16,8 @@ class DJ:
         # instance variables for dijkstras
         self.INFINITY = 2147483647
         self.visited = set()
-        self.unvisited = set()
         self.distances = Priority_Queue()
         self.predecessors = [-1] * (maze.num_nodes+1)
-
-        # add the remaining Nodes to the unvisited set
-        # note: nodes are just numbers
-        for i in range(1, maze.num_nodes + 1):
-            self.unvisited.add(i)
 
         # add all of the nodes to the distances heap.
         # insert the start node with a distance 0 and all others with self.INFINITY
@@ -33,13 +26,10 @@ class DJ:
 
         for i in range(2, self.maze.num_nodes + 1):
             self.distances.insert(i, self.INFINITY)
-        
-
 
         # the answer deque representing the shortest path from start
         # node to the end node
         self.answer = deque()
-
 
     """
     solves the maze using dijkstras algorithm.
@@ -47,10 +37,7 @@ class DJ:
     """
     def solve(self):
 
-        # do this while unvisited set is not empty
         while not self.distances.empty():
-        
-            #self.distances.print()
         
             if self.end_node in self.visited:
                 break
@@ -60,7 +47,6 @@ class DJ:
             self.visited.add(curr[0])
 
             neighbors = self.graph[curr[0]]
-            #print(curr[0])
 
             for v in neighbors:
             
@@ -70,8 +56,6 @@ class DJ:
                         self.distances.decrease_key(v, curr[1] + 1)
                         self.predecessors[v] = curr[0]
 
-        #print("done with dijkstras")
-        
         current = self.end_node
         self.answer.appendleft(self.end_node)
 

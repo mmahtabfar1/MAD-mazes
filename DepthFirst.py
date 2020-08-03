@@ -24,15 +24,35 @@ class DFS:
         self.stack.push(1)
 
     # this method will advance the current node and stack using DFS
-    # this needs to be called over and over again with time in-between for
-    # use with the GUI should return true if the maze has been solved, false otherwise
+    # this needs to be called over and over again until it returns true
+    # use with make_gif method to create animation of maze being solved
     def advance(self):
 
         if not self.stack.empty():
 
             self.current_node = self.stack.peek()
+            self.stack.pop()
 
-        pass
+            if not self.current_node in self.visited:
+                
+                self.visited.add(self.current_node)
+                self.answer.append(self.current_node)
+
+                self.stack.push(self.current_node)
+
+                if self.current_node == self.end_node:
+                    return True
+
+                for i in self.graph[self.current_node]:
+                    if not i in self.visited:
+                        self.stack.push(i)
+
+            else:
+                if self.current_node in self.answer:
+                    self.answer.pop()
+
+            return False
+
 
     # this method will solve the maze all at once for use with CLI
     def solve(self):
@@ -84,7 +104,43 @@ class DFS:
 
         self.maze.im.save(filepath)
 
-    # this method is used to create a gif for the github page
+    # this method is used to create a gif instead of a png
     def make_gif(self, filepath):
 
-        pass
+        # list to hold intermediate images
+        images = []
+        
+        while not self.advance():
+            
+            # copy of the image object
+            copy = self.maze.im.copy()
+
+            #convert to rgb
+            copy = copy.convert("RGB")
+            px = copy.load()
+
+            for node in self.answer:
+
+                location = self.positions[node]
+                px[location] = (255, 0 ,0)
+
+            images.append(copy.copy())
+
+        # do this one more time for the solved frame
+        copy = self.maze.im.copy()
+
+        #convert to rgb
+        copy = copy.convert("RGB")
+        px = copy.load()
+
+        for node in self.answer:
+
+            location = self.positions[node]
+            px[location] = (255, 0 ,0)
+
+        images.append(copy)
+
+        images[0].save(filepath, format="GIF",
+                append_images=images[1:],
+                save_all=True,
+                duration=300, Loop=0)

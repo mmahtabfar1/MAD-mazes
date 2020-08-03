@@ -9,6 +9,5 @@ def main():
     window = Window(root)
     root.mainloop()
 
-	if __name__ == "__main__":
-
-main()
+if __name__ == "__main__":
+    main()
