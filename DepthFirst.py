@@ -35,7 +35,7 @@ class DFS:
             self.stack.pop()
 
             if not self.current_node in self.visited:
-                
+
                 self.visited.add(self.current_node)
                 self.answer.append(self.current_node)
 
@@ -54,8 +54,8 @@ class DFS:
 
             return False
 
-
     # this method will solve the maze all at once for use with CLI
+
     def solve(self):
 
         while not self.stack.empty():
@@ -110,43 +110,48 @@ class DFS:
 
         # list to hold intermediate images
         images = []
-        
+
         while not self.advance():
-            
+
             # copy of the image object
             copy = self.maze.im.copy()
 
-            #convert to rgb
+            # convert to rgb
             copy = copy.convert("RGB")
             px = copy.load()
 
             for node in self.answer:
 
                 location = self.positions[node]
-                px[location] = (255, 0 ,0)
+                px[location] = (255, 0, 0)
 
             images.append(copy)
 
         # do this one more time for the solved frame
         copy = self.maze.im.copy()
 
-        #convert to rgb
+        # convert to rgb
         copy = copy.convert("RGB")
         px = copy.load()
 
         for node in self.answer:
 
             location = self.positions[node]
-            px[location] = (255, 0 ,0)
+            px[location] = (255, 0, 0)
 
         images.append(copy)
-        
+
         # resize the images to make them easier to view
         # since gifs are difficult to resize after creation
         for i in range(len(images)):
-            images[i] = images[i].resize((500,500), Image.NEAREST)
+            images[i] = images[i].resize((500, 500), Image.NEAREST)
+
+        # change file extension to .gif
+        filepath = filepath.replace(".png", ".gif")
 
         images[0].save(filepath, format="GIF",
-                append_images=images[1:],
-                save_all=True,
-                duration=300, loop=0, quality=100)
+                       append_images=images[1:],
+                       save_all=True,
+                       duration=300, loop=0, quality=100)
+
+        print(":: A gif has been written as {}".format(filepath))
