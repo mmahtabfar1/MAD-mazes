@@ -94,11 +94,11 @@ Node heapRemove(Node *arr, int *node_locations, int *size)
         // then swap with left child.
         if (arr[child].distance < arr[child + 1].distance)
         {
-            
+
             //update node_locations to reflect this change
             node_locations[arr[pos].id] = child;
             node_locations[arr[child].id] = pos;
-            
+
             Node temp = arr[pos];
             arr[pos] = arr[child];
             arr[child] = temp;
@@ -111,11 +111,11 @@ Node heapRemove(Node *arr, int *node_locations, int *size)
         //swap with second child
         else
         {
-            
+
             //update node_locations to reflect this change
             node_locations[arr[pos].id] = child + 1;
             node_locations[arr[child + 1].id] = pos;
-                        
+
             Node temp = arr[pos];
             arr[pos] = arr[child + 1];
             arr[child + 1] = temp;
@@ -175,7 +175,7 @@ PyObject *Priority_Queue_insert(Priority_Queue *self, PyObject *args)
     insertHeap(self->arr, self->node_locations, temp, &(self->size));
 
     //does not return a type same as None in python
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyObject *
@@ -201,7 +201,7 @@ Priority_Queue_Decrease_Key(Priority_Queue *self, PyObject *args)
     Decrease_Key(self->arr, self->node_locations, new_distance, id);
 
     //does not return a type same as None in python
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 PyObject *
@@ -240,7 +240,7 @@ Priority_Queue_Empty(Priority_Queue *self)
 {
     if (self->size == 0)
         Py_RETURN_TRUE;
-    
+
     Py_RETURN_FALSE;
 }
 
@@ -252,25 +252,23 @@ Priority_Queue_Print(Priority_Queue *self)
     printf("Priority_Queue:\n");
     //print start bracket
     printf("[");
-    
-    for(int i = 0; i < self->size - 1; i++)
+
+    for (int i = 0; i < self->size - 1; i++)
     {
         printf("(%d, %d) ", self->arr[i].id, self->arr[i].distance);
     }
-    
+
     //print end bracket and last element
     printf("(%d, %d)]\n", self->arr[self->size - 1].id, self->arr[self->size - 1].distance);
-    
+
     printf("\nNode_locations:\n");
-    
-    for(int i = 0; i < self->size; i++)
+
+    for (int i = 0; i < self->size; i++)
     {
         printf("Node %d is locatd at index %d\n", self->arr[i].id, self->node_locations[self->arr[i].id]);
     }
-    
-    
-    return Py_None;
 
+    Py_RETURN_NONE;
 }
 
 //print just the Priority_Queue
@@ -281,17 +279,16 @@ Priority_Queue_PrintArray(Priority_Queue *self)
     printf("Priority_Queue:\n");
     //print start bracket
     printf("[");
-    
-    for(int i = 0; i < self->size - 1; i++)
+
+    for (int i = 0; i < self->size - 1; i++)
     {
         printf("(%d, %d) ", self->arr[i].id, self->arr[i].distance);
     }
-    
+
     //print end bracket and last element
     printf("(%d, %d)]\n", self->arr[self->size - 1].id, self->arr[self->size - 1].distance);
 
-    return Py_None;
-
+    Py_RETURN_NONE;
 }
 
 //print just the Node locations
@@ -300,14 +297,13 @@ Priority_Queue_PrintNodes(Priority_Queue *self)
 {
 
     printf("\nNode_locations:\n");
-    
-    for(int i = 0; i < self->size; i++)
+
+    for (int i = 0; i < self->size; i++)
     {
         printf("Node %d is locatd at index %d\n", self->arr[i].id, self->node_locations[self->arr[i].id]);
     }
-    
-    return Py_None;
 
+    Py_RETURN_NONE;
 }
 
 //constructor for the object

@@ -33,13 +33,13 @@ Stack_push(Stack *self, PyObject *args)
 
     //if the stack is full do not do anything
     if (self->size == MAX_SIZE)
-        return Py_None;
+        Py_RETURN_NONE;
 
     //push value onto the stack
     self->arr[self->size++] = val;
 
     //return python none object
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 //Stack pop method
@@ -49,7 +49,7 @@ Stack_pop(Stack *self)
     if (self->size != 0)
         self->size--;
 
-    return Py_None;
+    Py_RETURN_NONE;
 }
 
 //Stack peek method
@@ -76,7 +76,7 @@ Stack_empty(Stack *self)
 {
     if (self->size == 0)
         Py_RETURN_TRUE;
-    
+
     Py_RETURN_FALSE;
 }
 

@@ -68,7 +68,7 @@ static PyMethodDef Priority_Queue_methods[] = {
 
     {"decrease_key", (PyCFunction)Priority_Queue_Decrease_Key, METH_VARARGS,
      "Decrease the distance of a particular node"},
-    
+
     {"print", (PyCFunction)Priority_Queue_Print, METH_NOARGS,
      "Prints the queue to the screen for debugging purposes"},
 
