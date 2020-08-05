@@ -90,6 +90,16 @@ class DFS:
                 if curr in self.answer:
                     self.answer.pop()
 
+    def write_img(self):
+        # first convert the image to rgb
+        self.maze.im = self.maze.im.convert("RGB")
+        px = self.maze.im.load()
+
+        for node in self.answer:
+
+            location = self.positions[node]
+            px[location] = (255, 0, 0)
+
     # this method will write out the solved maze to a new png file
     # with the DFS solution in red pixels
     def write_out(self, filepath):
@@ -155,3 +165,4 @@ class DFS:
                        duration=300, loop=0, quality=100)
 
         print(":: A gif has been written as {}".format(filepath))
+

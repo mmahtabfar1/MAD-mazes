@@ -1,8 +1,0 @@
-DONE Make Priority Queue in python - Mahan
-DONE JLook into DFS missing single node in path - Derek
-DONE Test and get dijkstras workign with the new Priority Queue - Mahan
-
-DONE make argparse version and get set up to read from a directory - Mahan and Derek
-
-Look into Tkinter GUI for python and set up basic visuals - Amer
-Created Hello World Py file to test KTinker stuff - Amer

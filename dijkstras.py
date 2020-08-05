@@ -67,6 +67,17 @@ class DJ:
 
         self.answer.appendleft(self.start_node)
 
+    def write_img(self):
+
+        # first convert the image to rgb
+        self.maze.im = self.maze.im.convert("RGB")
+        px = self.maze.im.load()
+
+        for node in self.answer:
+
+            location = self.positions[node]
+            px[location] = (0, 0, 255)
+
     def write_out(self, filepath):
 
         # first convert the image to rgb
@@ -80,4 +91,3 @@ class DJ:
 
         self.maze.im.save(filepath)
 
-        
