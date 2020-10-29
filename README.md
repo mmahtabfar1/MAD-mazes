@@ -1,5 +1,5 @@
 # MAD-mazes
-Final Project for Data Structures and Algorithms
+
 
 ![Alt Text](./mazes/tiny.gif)
 
